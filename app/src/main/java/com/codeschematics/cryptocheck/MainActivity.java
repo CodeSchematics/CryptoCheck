@@ -1,5 +1,8 @@
 package com.codeschematics.cryptocheck;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +18,22 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity
 {
     // Create the base URL
     private final String BASE_URL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC";
+
+    TextView mDateView;
+    TextView mTimeZone;
 
     TextView mPriceTextView;
 
@@ -29,6 +42,15 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Display current date and timezone
+        mDateView = (TextView) findViewById(R.id.textDate);
+        String date = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        mDateView.setText(date);
+
+        mTimeZone = (TextView) findViewById(R.id.timeZone);
+        String timeZone = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT);
+        mTimeZone.setText(timeZone);
 
         mPriceTextView = (TextView) findViewById(R.id.priceLabel);
         Spinner spinner = (Spinner) findViewById(R.id.currencySpinner);
@@ -78,6 +100,7 @@ public class MainActivity extends AppCompatActivity
                     String bitcoinValue = response.getString("last");
 
                     mPriceTextView.setText(bitcoinValue);
+                    mPriceTextView.setTextSize(36);
                 }
                 catch (JSONException e)
                 {
@@ -91,7 +114,16 @@ public class MainActivity extends AppCompatActivity
                 Log.d("Bitcoin", "Request fail! Status code: " + statusCode);
                 Log.d("Bitcoin", "Fail response: " + response);
                 Log.e("ERROR", e.toString());
+                mPriceTextView.setTextSize(26);
+                mPriceTextView.setText(R.string.label_error_text);
             }
         });
+    }
+
+    private boolean isNetworkAvailable()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
