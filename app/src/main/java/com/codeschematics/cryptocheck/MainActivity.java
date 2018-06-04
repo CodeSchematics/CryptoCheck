@@ -18,9 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -57,9 +55,9 @@ public class MainActivity extends AppCompatActivity
         mPriceTextView = findViewById(R.id.priceLabel);
         Spinner spinner = findViewById(R.id.currencySpinner);
 
-        mDayAvTextView = findViewById((R.id.dayAverageLabel));
-        mWeekAvTextView = findViewById(R.id.weekAverageLabel);
-        mMonthAvTextView = findViewById(R.id.monthAverageLabel);
+        mDayAvTextView = findViewById((R.id.dayAverageValue));
+        mWeekAvTextView = findViewById(R.id.weekAverageValue);
+        mMonthAvTextView = findViewById(R.id.monthAverageValue);
 
         // Create an ArrayAdapter using the string array from strings.xml and the spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
-        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -132,10 +129,10 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private boolean isNetworkAvailable()
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+//    private boolean isNetworkAvailable()
+//    {
+//        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+//        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+//    }
 }

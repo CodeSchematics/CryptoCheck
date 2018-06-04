@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codeschematics.cryptocheck.MainActivity">
+    tools:context="com.codeschematics.cryptocheck.MainActivity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bitcoin_image"
+        android:contentDescription="@string/imageview_desc"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,26 +26,16 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
             android:alignmentMode="alignMargins"
             android:columnCount="1"
             android:columnOrderPreserved="false"
             android:padding="14dp"
             android:rowCount="2">
 
-            <ImageView
-                android:id="@+id/logoImageView"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bitcoin_image" />
+
 
             <!-- CardView 1 -->
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +64,7 @@
                         android:layout_marginRight="10dp"
                         android:text="@string/label_default_text"
                         android:textColor="@color/colorAccent"
-                        android:textSize="36dp" />
+                        android:textSize="36sp" />
 
 
                     <LinearLayout
@@ -76,10 +79,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
                             android:text="@string/base"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <Spinner
                             android:id="@+id/currencySpinner"
@@ -93,7 +96,7 @@
             </android.support.v7.widget.CardView>
 
             <!-- CardView 2 -->
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
                 android:id="@+id/card_view_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="26dp" />
+                        android:textSize="26sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -132,15 +135,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="20dp" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/timeZone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="10dp"
-                            android:textSize="14dp" />
+                            android:layout_marginStart="10dp"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -148,7 +151,7 @@
             </android.support.v7.widget.CardView>
 
             <!-- CardView 3 -->
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
                 android:id="@+id/card_view_averages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,8 +174,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Averages"
-                        android:textSize="26dp" />
+                        android:text="@string/averages_header"
+                        android:textSize="26sp" />
 
 
                     <LinearLayout
@@ -187,17 +190,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:layout_gravity="center"
-                            android:text="Day"
-                            android:textSize="14dp" />
+                            android:text="@string/day_average_label"
+                            android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/dayAverageValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
-                            android:text="Day"
-                            android:textSize="14dp"/>
+                            android:layout_marginRight="10dp"
+                            android:text="@string/label_default_text"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -211,18 +217,21 @@
                             android:id="@+id/weekAverageLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
+                            android:layout_gravity="start"
                             android:layout_marginLeft="10dp"
-                            android:text="Week"
-                            android:textSize="14dp" />
+                            android:layout_marginRight="10dp"
+                            android:text="@string/week_average_label"
+                            android:textSize="14sp" />
                         <TextView
                             android:id="@+id/weekAverageValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
-                            android:text="Week"
-                            android:textSize="14dp"/>
+                            android:layout_marginRight="10dp"
+                            android:text="@string/label_default_text"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -236,18 +245,21 @@
                             android:id="@+id/monthAverageLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
+                            android:layout_gravity="start"
                             android:layout_marginLeft="10dp"
-                            android:text="Month"
-                            android:textSize="14dp" />
+                            android:layout_marginRight="10dp"
+                            android:text="@string/month_average_label"
+                            android:textSize="14sp" />
                         <TextView
                             android:id="@+id/monthAverageValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
-                            android:text="Month"
-                            android:textSize="14dp"/>
+                            android:layout_marginRight="10dp"
+                            android:text="@string/label_default_text"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp"/>
                     </LinearLayout>
 
                 </LinearLayout>
