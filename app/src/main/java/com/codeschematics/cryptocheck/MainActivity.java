@@ -29,13 +29,15 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity
 {
-    // Create the base URL
     private final String BASE_URL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC";
+    final String LOGCAT_TAG = "CryptoCheck";
 
     TextView mDateView;
     TextView mTimeZone;
-
     TextView mPriceTextView;
+    TextView mDayAvTextView;
+    TextView mWeekAvTextView;
+    TextView mMonthAvTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,17 +45,21 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Display current date and timezone
-        mDateView = (TextView) findViewById(R.id.textDate);
+        // Display current date
+        mDateView = findViewById(R.id.textDate);
         String date = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
         mDateView.setText(date);
-
-        mTimeZone = (TextView) findViewById(R.id.timeZone);
+        // and time zone
+        mTimeZone = findViewById(R.id.timeZone);
         String timeZone = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT);
         mTimeZone.setText(timeZone);
 
-        mPriceTextView = (TextView) findViewById(R.id.priceLabel);
-        Spinner spinner = (Spinner) findViewById(R.id.currencySpinner);
+        mPriceTextView = findViewById(R.id.priceLabel);
+        Spinner spinner = findViewById(R.id.currencySpinner);
+
+        mDayAvTextView = findViewById((R.id.dayAverageLabel));
+        mWeekAvTextView = findViewById(R.id.weekAverageLabel);
+        mMonthAvTextView = findViewById(R.id.monthAverageLabel);
 
         // Create an ArrayAdapter using the string array from strings.xml and the spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -65,20 +71,19 @@ public class MainActivity extends AppCompatActivity
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        // Set OnItemSelected listener on the spinner
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                Log.d("Bitcoin", "" + parent.getItemAtPosition(position));
+                Log.d(LOGCAT_TAG, "" + parent.getItemAtPosition(position));
                 letsDoSomeNetworking(BASE_URL + parent.getItemAtPosition(position));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
-                Log.d("Bitcoin", "Nothing selected");
+                Log.d(LOGCAT_TAG, "Nothing selected");
             }
         });
 
@@ -92,15 +97,22 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // called when response HTTP status is "200 OK"
-                Log.d("Bitcoin", "JSON: " + response.toString());
+                Log.d(LOGCAT_TAG, "JSON: " + response.toString());
 
                 // Parse JSON
                 try
                 {
                     String bitcoinValue = response.getString("last");
+                    String bitcoinDayAv = response.getJSONObject("averages").getString("day");
+                    String bitcoinWeekAv = response.getJSONObject("averages").getString("week");
+                    String bitcoinMonthAv = response.getJSONObject("averages").getString("month");
 
                     mPriceTextView.setText(bitcoinValue);
                     mPriceTextView.setTextSize(36);
+
+                    mDayAvTextView.setText(bitcoinDayAv);
+                    mWeekAvTextView.setText(bitcoinWeekAv);
+                    mMonthAvTextView.setText(bitcoinMonthAv);
                 }
                 catch (JSONException e)
                 {
@@ -111,8 +123,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.d("Bitcoin", "Request fail! Status code: " + statusCode);
-                Log.d("Bitcoin", "Fail response: " + response);
+                Log.d(LOGCAT_TAG, "Request fail! Status code: " + statusCode);
+                Log.d(LOGCAT_TAG, "Fail response: " + response);
                 Log.e("ERROR", e.toString());
                 mPriceTextView.setTextSize(26);
                 mPriceTextView.setText(R.string.label_error_text);
