@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Crypto Check</string>
-    <string name="label_default_text">304.74</string>
+    <string name="label_default_text">0.0</string>
     <string name="label_error_text">no internet connection</string>
     <string name="base">Base Currency</string>
+    <string name="averages_header">Averages</string>
+    <string name="day_average_label">Day</string>
+    <string name="week_average_label">Week</string>
+    <string name="month_average_label">Month</string>
+    <!-- Descriptions-->
     <string name="imageview_desc">Bitcoin Logo</string>
 
     <string-array name="currency_array">
