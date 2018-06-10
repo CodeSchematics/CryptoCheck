@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codeschematics.cryptocheck.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.codeschematics.cryptocheck.MainActivity">
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -17,7 +17,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bitcoin_image"
-        android:contentDescription="@string/imageview_desc"/>
+        android:contentDescription="@string/imageview_desc" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,7 +31,6 @@
             android:columnOrderPreserved="false"
             android:padding="14dp"
             android:rowCount="2">
-
 
 
             <!-- CardView 1 -->
@@ -79,8 +78,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="5dp"
                             android:layout_marginEnd="10dp"
+                            android:layout_marginStart="5dp"
                             android:text="@string/base"
                             android:textSize="14sp" />
 
@@ -181,8 +180,8 @@
                     <LinearLayout
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -193,8 +192,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:text="@string/day_average_label"
-                            android:textSize="14sp"
-                            android:textAlignment="textEnd"/>
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp" />
+
                         <TextView
                             android:id="@+id/dayAverageValue"
                             android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                             android:layout_marginRight="10dp"
                             android:text="@string/label_default_text"
                             android:textColor="@color/colorAccent"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -222,8 +222,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:text="@string/week_average_label"
-                            android:textSize="14sp"
-                            android:textAlignment="textEnd"/>
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp" />
+
                         <TextView
                             android:id="@+id/weekAverageValue"
                             android:layout_width="wrap_content"
@@ -233,7 +234,7 @@
                             android:layout_marginRight="10dp"
                             android:text="@string/label_default_text"
                             android:textColor="@color/colorAccent"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -251,8 +252,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:text="@string/month_average_label"
-                            android:textSize="14sp"
-                            android:textAlignment="textEnd"/>
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp" />
+
                         <TextView
                             android:id="@+id/monthAverageValue"
                             android:layout_width="wrap_content"
@@ -262,11 +264,46 @@
                             android:layout_marginRight="10dp"
                             android:text="@string/label_default_text"
                             android:textColor="@color/colorAccent"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                 </LinearLayout>
 
+            </android.support.v7.widget.CardView>
+
+            <!-- CardView 4 -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_trends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_rowWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                tools:style="@style/CardView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/trendsHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Trends"
+                        android:textSize="26sp" />
+
+                    <com.jjoe64.graphview.GraphView
+                        android:id="@+id/graph"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dip" />
+
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
         </GridLayout>
