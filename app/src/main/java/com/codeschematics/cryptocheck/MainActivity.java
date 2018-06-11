@@ -1,6 +1,8 @@
 package com.codeschematics.cryptocheck;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -100,14 +102,25 @@ public class MainActivity extends AppCompatActivity
 
         spinner.setAdapter(adapter);
 
+        //load previous selection with loadSpinnerPosition()
+        spinner.setSelection(loadSpinnerPosition());
+        Log.d(LOGCAT_TAG, "The pref is: "+loadSpinnerPosition());
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 Log.d(LOGCAT_TAG, "" + parent.getItemAtPosition(position));
-                letsDoSomeNetworking(BASE_URL + parent.getItemAtPosition(position));
-                getHistory("https://apiv2.bitcoinaverage.com/indices/global/history/BTCUSD?period=alltime&format=json");
+                saveSpinnerPosition(position);
+                if(day0Value != null)
+                {
+                    Log.d(LOGCAT_TAG, "restarting activity");
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                getTicker(BASE_URL + parent.getItemAtPosition(position));
+                getHistory("https://apiv2.bitcoinaverage.com/indices/global/history/BTC"+parent.getItemAtPosition(position)+"?period=alltime&format=json");
             }
 
             @Override
@@ -119,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void letsDoSomeNetworking(String url)
+    private void getTicker(String url)
     {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler()
@@ -242,5 +255,18 @@ public class MainActivity extends AppCompatActivity
 
         graph.setTitle(lastDay + " - " + today);
         graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+    }
+
+    private void saveSpinnerPosition(int position)
+    {
+        SharedPreferences prefs = getSharedPreferences("PREFS",0);
+        prefs.edit().putInt("POSITION_KEY",position).apply();
+        Log.d(LOGCAT_TAG, "saving: " + position);
+    }
+    private int loadSpinnerPosition()
+    {
+        SharedPreferences prefs = getSharedPreferences("PREFS", 0);
+        int position = prefs.getInt("POSITION_KEY", 0);
+        return position;
     }
 }
