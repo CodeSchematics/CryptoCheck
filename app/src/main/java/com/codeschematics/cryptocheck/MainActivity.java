@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -96,10 +97,7 @@ public class MainActivity extends AppCompatActivity
         // Create an ArrayAdapter using the string array from strings.xml and the spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.currency_array, R.layout.spinner_item);
-
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-
         spinner.setAdapter(adapter);
 
         //load previous selection with loadSpinnerPosition()
@@ -226,17 +224,28 @@ public class MainActivity extends AppCompatActivity
 
     private void loadGraph()
     {
-        double numbertwo = Double.valueOf(day1Value);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
-                new DataPoint(0, Double.valueOf(day0Value)),
-                new DataPoint(1, numbertwo),
-                new DataPoint(2, Double.valueOf(day2Value)),
-                new DataPoint(3, Double.valueOf(day3Value)),
-                new DataPoint(4, Double.valueOf(day4Value)),
-                new DataPoint(5, Double.valueOf(day5Value)),
-                new DataPoint(6, Double.valueOf(day6Value)),
-                new DataPoint(7, Double.valueOf(bitcoinDayAv))
-        });
+        double[] pointArray = new double[]{
+                Double.valueOf(day0Value),
+                Double.valueOf(day1Value),
+                Double.valueOf(day2Value),
+                Double.valueOf(day3Value),
+                Double.valueOf(day4Value),
+                Double.valueOf(day5Value),
+                Double.valueOf(day6Value),
+                Double.valueOf(bitcoinDayAv),
+        };
+        DataPoint[] dataPointArray = new DataPoint[8];
+        int i = 0;
+        for (double d : pointArray)
+        {
+            dataPointArray[i] = new DataPoint(i, pointArray[i]);
+            i += 1;
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPointArray);
+
+        Arrays.sort(pointArray);
+        double min = pointArray[0];
+        double max = pointArray[7];
 
         Paint paint = new Paint();
         int color = ContextCompat.getColor(this, R.color.colorAccent);
@@ -247,8 +256,8 @@ public class MainActivity extends AppCompatActivity
         graph.addSeries(series);
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(7);
-        graph.getViewport().setMinY(numbertwo - 1000);
-        graph.getViewport().setMaxY(numbertwo + 1000);
+        graph.getViewport().setMinY(min - 1000);
+        graph.getViewport().setMaxY(max + 1000);
 
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setYAxisBoundsManual(true);
